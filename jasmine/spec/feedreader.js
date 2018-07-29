@@ -91,21 +91,42 @@ $(function() {
        beforeEach((done) => {
          loadFeed(0, () => {
            done();
-         })
-       })
+         });
+       });
 
        it('has at least one entry', function(done) {
          let containerChildren = $('.feed').children('.entry-link').children('.entry');
          expect(containerChildren.length).not.toBe(0);
          done();
-       })
+       });
 
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    /*Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
+      let initialState,  finalState;
+      /* TODO: Write a test that ensures when a new feed is loaded
+       * by the loadFeed function that the content actually changes.
+       * Remember, loadFeed() is asynchronous.
+       */
+       beforeEach((done) => {
+         loadFeed(0, () => {
+           initialState = $('.feed')[0].innerHTML;
+           done();
+         })
+       })
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+       beforeEach((done) => {
+         loadFeed(1, () => {
+           finalState = $('.feed')[0].innerHTML;
+           done();
+         })
+       })
+
+       it('entry has changed', function(done) {
+         expect(initialState).not.toEqual(finalState);
+         done();
+       });
+    })
+
 }());
