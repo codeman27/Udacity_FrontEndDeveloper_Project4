@@ -43,9 +43,9 @@ $(function() {
          * and that the name is not empty.
          */
          it('names are defined and not empty ', function() {
-           allFeeds.forEach((val) => {
-             expect(val.name).toBeDefined();
-             expect(val.name.length).not.toBe(0);
+           allFeeds.forEach((feed) => {
+             expect(feed.name).toBeDefined();
+             expect(feed.name.length).not.toBe(0);
            });
          });
     });
@@ -72,9 +72,9 @@ $(function() {
         */
 
         it('will show and hide on click', function() {
-          btn.trigger('click');
+          btn.click();
           expect(body.hasClass('menu-hidden')).toBeFalsy();
-          btn.trigger('click');
+          btn.click();
           expect(body.hasClass('menu-hidden')).toBeTruthy();
         })
 
@@ -88,16 +88,11 @@ $(function() {
        * Remember, loadFeed() is asynchronous so this test will require
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
-       beforeEach((done) => {
-         loadFeed(0, () => {
-           done();
-         });
-       });
+       beforeEach(done => loadFeed(0, done));
 
-       it('has at least one entry', function(done) {
-         let containerChildren = $('.feed').children('.entry-link').children('.entry');
+       it('has at least one entry', function() {
+         let containerChildren = $('.feed .entry');
          expect(containerChildren.length).not.toBe(0);
-         done();
        });
 
     });
@@ -111,21 +106,20 @@ $(function() {
        */
        beforeEach((done) => {
          loadFeed(0, () => {
-           initialState = $('.feed')[0].innerHTML;
+           initialState = $('.feed').html();
            done();
          })
        })
 
        beforeEach((done) => {
          loadFeed(1, () => {
-           finalState = $('.feed')[0].innerHTML;
+           finalState = $('.feed').html();
            done();
          })
        })
 
-       it('entry has changed', function(done) {
+       it('entry has changed', function() {
          expect(initialState).not.toEqual(finalState);
-         done();
        });
     })
 
